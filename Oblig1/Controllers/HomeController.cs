@@ -21,6 +21,17 @@ namespace Oblig1.Controllers
         private string mySessionAuthorized = "Authorized";
         private string mySessionCart = "Cart";
         private string mySessionUser = "User";
+        private ILunaLogic _LunaBLL;
+
+        public HomeController()
+        {
+            _LunaBLL = new LunaBLL();
+        }
+
+        public HomeController(ILunaLogic stub)
+        {
+            _LunaBLL = stub;
+        }
         
 
         /// <summary>
@@ -29,8 +40,7 @@ namespace Oblig1.Controllers
         /// <returns>Returnerer alle filmene i databasen sortert etter sjanger.</returns>
         public ActionResult Index()
         {
-            var LunaBLL = new LunaBLL();
-            var AllMoviesInDb = LunaBLL.getAllMovies();
+            var AllMoviesInDb = _LunaBLL.getAllMovies();
             if (Session[mySessionAuthorized] == null)
             {
                 Session[mySessionAuthorized] = false;
@@ -72,8 +82,7 @@ namespace Oblig1.Controllers
             }
             else
             {
-                var LunaBLL = new LunaBLL();
-                if (LunaBLL.UserInDB(user))
+                if (_LunaBLL.UserInDB(user))
                 {
                     Session[mySessionAuthorized] = true;
                     Session[mySessionUser] = user.Email;
@@ -105,8 +114,7 @@ namespace Oblig1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var LunaBLL = new LunaBLL();
-                bool ok = LunaBLL.AddCustomer(user);
+                bool ok = _LunaBLL.AddCustomer(user);
 
                 if (ok)
                 {
@@ -135,8 +143,7 @@ namespace Oblig1.Controllers
             }
             else
             {
-                var LunaBLL = new LunaBLL();
-                UserViewModel user = LunaBLL.GetDetailedUser((string)Session[mySessionUser]);
+                UserViewModel user = _LunaBLL.GetDetailedUser((string)Session[mySessionUser]);
 
                 return View(user);
             }
@@ -172,18 +179,17 @@ namespace Oblig1.Controllers
         /// <param name="id"> Metoden tar en ID parameter, som tilsvarer en ID i Movie-databasen </param>
         public void AddToCart(int id)
         {
-            var LunaBLL = new LunaBLL();
                 if (Session[mySessionCart] == null)
                 {
                     var moviesInCart = new List<Movie>(); //Bytte til ViewModel?
-                    var newMovie = LunaBLL.GetMovieById(id);
+                    var newMovie = _LunaBLL.GetMovieById(id);
                     moviesInCart.Add(newMovie);
                     Session[mySessionCart] = moviesInCart;
                 }
                 else
                 {
                     List<Movie> currentMovieList = (List<Movie>)Session[mySessionCart];
-                    var newMovie = LunaBLL.GetMovieById(id);
+                    var newMovie = _LunaBLL.GetMovieById(id);
                     currentMovieList.Add(newMovie);
                     Session[mySessionCart] = currentMovieList;
                 }
@@ -208,8 +214,7 @@ namespace Oblig1.Controllers
         {
             try
             {
-                var LunaBLL = new LunaBLL();
-                bool checkoutComplete = LunaBLL.createOrder((List<Movie>)Session[mySessionCart], (string)Session[mySessionUser]);
+                bool checkoutComplete = _LunaBLL.createOrder((List<Movie>)Session[mySessionCart], (string)Session[mySessionUser]);
                 if (checkoutComplete)
                 {
                     Session[mySessionCart] = new List<Movie>();
@@ -261,8 +266,7 @@ namespace Oblig1.Controllers
         /// <returns>Returnerer et partial-view med informasjon om den aktuelle filmen.</returns>
         public ActionResult GetDetailedMovie(int id)
         {
-            var LunaBLL = new LunaBLL();
-            return PartialView("DetailedMovieModal", LunaBLL.MovieDetail(id));
+            return PartialView("DetailedMovieModal", _LunaBLL.MovieDetail(id));
         }
 
         /// <summary>
@@ -273,12 +277,11 @@ namespace Oblig1.Controllers
         /// <returns>Returnerer en streng med informasjon om alle ordrene til kunden.</returns>
         public string JsGetOrders()
         {
-            var LunaBLL = new LunaBLL();
             var email = (string)Session[mySessionUser];
-                var user = LunaBLL.GetUser(email);
+                var user = _LunaBLL.GetUser(email);
                 int userId = user.UserId;
 
-                List<JsOrderViewModel> allOrders = LunaBLL.UsersOrders(userId);
+                List<JsOrderViewModel> allOrders = _LunaBLL.UsersOrders(userId);
                 var jsonSerializer = new JavaScriptSerializer();
                 string json = jsonSerializer.Serialize(allOrders);
                 return json;
@@ -291,8 +294,7 @@ namespace Oblig1.Controllers
             /// <returns>Returnerer en streng av en liste med filmer. </returns>
         public string JsLineData(int id)
         {
-            var LunaBLL = new LunaBLL();
-            List<JsMovieViewModel> jsMovieList = LunaBLL.OrderMovie(id);
+            List<JsMovieViewModel> jsMovieList = _LunaBLL.OrderMovie(id);
             var jsonSerializer = new JavaScriptSerializer();
             string json = jsonSerializer.Serialize(jsMovieList);
             return json;

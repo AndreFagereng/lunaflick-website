@@ -25,32 +25,26 @@ namespace Oblig1.DAL
 
         public List<JsMovieViewModel> OrderMovie(int orderId)
         {
-            using (var context = new LunaContext())
+            List<JsMovieViewModel> jsMovieList = new List<JsMovieViewModel>();
+            JsMovieViewModel m = new JsMovieViewModel()
             {
-                List<OrderLine> orderLineList = context.OrderLines.Include("Movie").Where(o => o.Order.OrderId == orderId).ToList();
-                List<JsMovieViewModel> jsMovieList = new List<JsMovieViewModel>();
-
-                foreach (var orderlinje in orderLineList)
-                {
-                    JsMovieViewModel m = new JsMovieViewModel()
-                    {
-                        Title = orderlinje.Movie.Title,
-                        MovieId = orderlinje.Movie.MovieId,
-                        Price = orderlinje.Movie.Price
-                    };
-                    jsMovieList.Add(m);
-                }
-
-                return jsMovieList;
-            }
+                Title = "Gjøkeredet",
+                MovieId = 1,
+                Price = 80.00
+            };
+            jsMovieList.Add(m);
+            jsMovieList.Add(m);
+            jsMovieList.Add(m);
+            return jsMovieList;
         }
         public Movie GetMovieById(int id)
         {
-            using (var context = new LunaContext())
+            Movie newMovie = new Movie
             {
-                Movie newMovie = context.Movies.FirstOrDefault(m => m.MovieId == id);
-                return newMovie;
-            }
+                MovieId = id,
+                Title = "Gjøkeredet"
+            };
+            return newMovie;
         }
     }
 }
