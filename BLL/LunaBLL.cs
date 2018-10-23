@@ -12,7 +12,7 @@ namespace BLL
     public class LunaBLL
     {
 
-        //TEST
+        //DETTE ER EN ENDRING
         public List<MovieListViewModel> getAllMovies()
         {
             var LunaDal = new MovieRepository();
