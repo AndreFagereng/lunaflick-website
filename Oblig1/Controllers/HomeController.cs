@@ -17,7 +17,9 @@ namespace Oblig1.Controllers
     /// </summary>
     public class HomeController : Controller
     {
-
+		/// <summary>
+		/// ///TESTETSTSET
+		/// </summary>
         private string mySessionAuthorized = "Authorized";
         private string mySessionCart = "Cart";
         private string mySessionUser = "User";
