@@ -11,6 +11,8 @@ namespace BLL
 {
     public class LunaBLL
     {
+
+        //TEST
         public List<MovieListViewModel> getAllMovies()
         {
             var LunaDal = new MovieRepository();
