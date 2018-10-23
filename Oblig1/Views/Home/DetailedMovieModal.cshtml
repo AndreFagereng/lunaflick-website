@@ -1,0 +1,42 @@
+﻿<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none">
+    <div class="modal-dialog">
+        <div class="loginmodal-container moviedetails-modal">
+            <row>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="col-xs-7">
+                    <h3 id="title" class="modalTitle" style="text-align: left"></h3>
+                    <div class="frontpage-margin">
+                        <row>
+                            <span id="storyline"></span><br /><br />
+                            <b>Sjanger: </b><span id="genre"></span><br />
+                            <b>Spilletid: </b><span id="duration"></span><br />
+                            <b>Utgitt: </b><span id="release"></span><br />
+                            <b>Regissør: </b><span id="director"></span><br />
+                            <b>Rating: </b><span id="rating"></span><br />
+                            <b>Pris: </b>kr <span id="price"></span>                            
+                        </row>
+                    </div>
+                </div>
+                <div class="col-xs-5 frontpage-margin">
+                    <img class="img-thumbnail movie-img" id="poster" alt="">
+                </div>
+            </row>
+            <row>
+                <div class="col-xs-12">
+                    @{ if ((bool)Session["Authorized"])
+                        {
+                            <input class="login loginmodal-submit" type="submit" name="kasse" id="toCart" style="background-color:#5cb85c" value="Legg i handlekurv" data-dismiss="modal" aria-hidden="true">
+                        }
+                        else
+                        {
+                            <input id="login-link" data-dismiss="modal" data-toggle="modal" data-target="#loginModal" class="login loginmodal-submit" type="submit" name="kasse" value="Vennligst logg inn" aria-hidden="true">
+                        }
+                    }
+                </div>
+            </row>
+        </div>
+    </div>
+</div>
+   

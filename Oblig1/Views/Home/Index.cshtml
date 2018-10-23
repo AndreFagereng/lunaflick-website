@@ -1,0 +1,82 @@
+﻿@model List<Oblig1.ViewModels.MovieListViewModel>
+
+<head>
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('a[data-toCart=true]').click(function () {
+
+            var data_id = $(this).data('id');
+            console.log(data_id);
+            var data_release = $(this).data('release');
+            var data_title = $(this).data('title');
+            var data_storyline = $(this).data('storyline');
+            var data_duration = $(this).data('duration');
+            var data_director = $(this).data('director');
+            var data_poster = $(this).data('poster');
+            var data_price = $(this).data('price');
+            var data_genre = $(this).data('genre');
+            var data_rating = $(this).data('rating');
+            $('#id').html(data_id);
+            $('#release').html(data_release);
+            $('#price').html(data_price);
+            $('#genre').html(data_genre);
+            $('#rating').html(data_rating);
+            $('#storyline').html(data_storyline);
+            $('#duration').html(data_duration);
+            $('#director').html(data_director);
+            $('#title').html(data_title);
+            $('#poster').attr('src', data_poster);
+
+            // legg ut dataene i div'en i modal-view'et
+
+            // lag en hendelse for knappen for å slette via ajax, knappen ligger i modal-view'et
+            // må ligge inne i denne overordnede funksjonen for at id'én som er valgt kan brukes
+            // $("#sletteModalKnapp").click
+            $('#toCart').unbind().bind('click', addToCart);
+            function addToCart() {
+                console.log("INNE I SISTE AJAX" + data_id);
+                // id som skal slettes ligger i data_id
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddToCart", "Home")',
+                    data: { id: data_id },  // en parameter inn i slett(id)-metoden i kunde-kontrolleren (JSON-objekt)
+                    success: function () {
+                        
+                        console.log("LAGT TIL MOVIE ID " + data_id)
+                        window.location.reload();
+                        }
+                    });
+                }
+         })
+        
+        });
+    </script>
+</head>
+<body>
+    <div id="frontpage-movies" class="container">
+       
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="frontpage-header">
+                    <h3>@item.listName</h3>
+                </div>
+                @foreach (var movies in item.List)
+                {
+                    Html.RenderPartial("_MoviePartial", movies);
+                }
+            </div>
+        }
+
+
+    </div>
+    @Html.Partial("DetailedMovieModal")
+    @{Html.RenderAction("LogReg"); }
+
+
+</body>
+
+
+
