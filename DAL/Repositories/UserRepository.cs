@@ -17,20 +17,20 @@ namespace Oblig1.DAL
     /// Vi ønsker etterhvert å implementere interfaces og benyttes oss av dependency injection.
     /// Dette vil skje senere da vi ikke har nok kunnskap om dette ennå.
     /// </summary>
-	public class UserRepository
-	{
+	public class UserRepository : IUserRepository
+    {
         /// <summary>
         /// Oppretter en ordre til en aktuell bruker og oppdaterer databasecontexten.
         /// </summary>
         /// <param name="movieList">Tar inn en liste av filmer.</param>
         /// <param name="userEmail">Tar inn en bruker-epost som fungerer som id og navigasjon.</param>
         /// <returns></returns>
-        
+
 
         public bool createOrder(List<Movie> movieList, string userEmail)
         {
-            
-            using(var context = new LunaContext())
+
+            using (var context = new LunaContext())
             {
 
                 try
@@ -40,7 +40,7 @@ namespace Oblig1.DAL
                     order.User = context.Users.FirstOrDefault(m => m.Email == userEmail);
                     order.OrderDate = DateTime.Now;
                     order.OrderLine = newOrderLines;
-                    
+
 
                     foreach (var movie in movieList)
                     {
@@ -53,13 +53,14 @@ namespace Oblig1.DAL
                     context.Orders.Add(order);
                     context.SaveChanges();
                     return true;
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     return false;
                 }
-                
-            }            
-            
+
+            }
+
         }
 
         /// <summary>
@@ -71,56 +72,56 @@ namespace Oblig1.DAL
         /// </summary>
         /// <param name="inUser">Tar inn en bruker</param>
         /// <returns>returnerer en bolsk verdi avhengig av om registreringen var velykket eller ikke.</returns>
-        
-        
+
+
         public bool AddCustomer(UserViewModel inUser)
-		{
-            
-			using (var context = new LunaContext())
-			{
-				try
-				{
+        {
+
+            using (var context = new LunaContext())
+            {
+                try
+                {
                     if (context.Users.FirstOrDefault(u => u.Email == inUser.Email) != null)
                     {
                         return false;
                     }
                     var newUser = new User()
-					{
-						FirstName = inUser.FirstName,
-						LastName = inUser.LastName,
-						Address = inUser.Address,
-					};
+                    {
+                        FirstName = inUser.FirstName,
+                        LastName = inUser.LastName,
+                        Address = inUser.Address,
+                    };
 
-					//Legger inn nytt postnr og poststed hvis det ikke allerede finnes i databasen.
-					if (context.PostalAddresses.Find(inUser.ZipCode) != null)
-					{
-						newUser.PostalAddress = context.PostalAddresses.FirstOrDefault(z => z.ZipCode == inUser.ZipCode);
-					}
-					else
-					{
-						newUser.PostalAddress = new PostalAddress()
-						{
-							ZipCode = inUser.ZipCode,
-							PostalArea = inUser.PostalArea
-						};
-					}
-					
-					newUser.Email = inUser.Email;
+                    //Legger inn nytt postnr og poststed hvis det ikke allerede finnes i databasen.
+                    if (context.PostalAddresses.Find(inUser.ZipCode) != null)
+                    {
+                        newUser.PostalAddress = context.PostalAddresses.FirstOrDefault(z => z.ZipCode == inUser.ZipCode);
+                    }
+                    else
+                    {
+                        newUser.PostalAddress = new PostalAddress()
+                        {
+                            ZipCode = inUser.ZipCode,
+                            PostalArea = inUser.PostalArea
+                        };
+                    }
 
-					var salt = PasswordEncryption.addSalt();
-					newUser.Salt = salt;
-					newUser.Password = PasswordEncryption.toHash(inUser.Password, salt);
+                    newUser.Email = inUser.Email;
 
-					context.Users.Add(newUser);
-					context.SaveChanges();  
-					return true;
-				}
-				catch (Exception error)
-				{
-					return false;
-				}
-			}
-		}
+                    var salt = PasswordEncryption.addSalt();
+                    newUser.Salt = salt;
+                    newUser.Password = PasswordEncryption.toHash(inUser.Password, salt);
+
+                    context.Users.Add(newUser);
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (Exception error)
+                {
+                    return false;
+                }
+            }
+        }
 
 
         // <summary>
@@ -131,23 +132,23 @@ namespace Oblig1.DAL
         /// <param name="user">Tar imot en bruker og sjekker eposten.</param>
         /// <returns>Returnerer true om brukern ble lagt til, og false om den allerede eksisterer.</returns>
 		public bool UserInDB(UserViewModel user)
-		{
-			using (var db = new LunaContext())
-			{
-				User authUser = db.Users.FirstOrDefault(u => u.Email == user.Email);
-				if (authUser != null)
-				{
-					byte[] usedPassword = PasswordEncryption.toHash(user.Password, authUser.Salt);
-					return (authUser.Password.SequenceEqual(usedPassword));
-				}
+        {
+            using (var db = new LunaContext())
+            {
+                User authUser = db.Users.FirstOrDefault(u => u.Email == user.Email);
+                if (authUser != null)
+                {
+                    byte[] usedPassword = PasswordEncryption.toHash(user.Password, authUser.Salt);
+                    return (authUser.Password.SequenceEqual(usedPassword));
+                }
 
-				else
-				{
-					return false;
-				}
-			}
+                else
+                {
+                    return false;
+                }
+            }
 
-		}
+        }
 
         /// <summary>
         /// Metoden returnerer en UserViewModel med informasjon om den aktuelle brukeren.
@@ -156,33 +157,33 @@ namespace Oblig1.DAL
         /// <param name="userEmail">Her bruker vi igjen epost som det unike attributten</param>
         /// <returns>Returnerer informasjon om brukeren om brukeren ligger i databasen.</returns>
 		public UserViewModel GetDetailedUser(string userEmail)
-		{
-			using (var context = new LunaContext())
-			{
-				try
-				{
-					var user = context.Users.Include("PostalAddress").SingleOrDefault(u => u.Email == userEmail);
-					UserViewModel userViewModel = new UserViewModel()
-					{
-                        
-						FirstName = user.FirstName,
-						LastName = user.LastName,
-						Address = user.Address,
-						Email = user.Email,
-						PostalArea = user.PostalAddress.PostalArea,
-						ZipCode = user.PostalAddress.ZipCode
-					};
+        {
+            using (var context = new LunaContext())
+            {
+                try
+                {
+                    var user = context.Users.Include("PostalAddress").SingleOrDefault(u => u.Email == userEmail);
+                    UserViewModel userViewModel = new UserViewModel()
+                    {
 
-					return userViewModel;
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Address = user.Address,
+                        Email = user.Email,
+                        PostalArea = user.PostalAddress.PostalArea,
+                        ZipCode = user.PostalAddress.ZipCode
+                    };
 
-				}
-				catch (Exception e)
-				{
-					// Må feilhåndteres!
-					return null;
-				}
-			}
-		}
+                    return userViewModel;
+
+                }
+                catch (Exception e)
+                {
+                    // Må feilhåndteres!
+                    return null;
+                }
+            }
+        }
 
         public User GetUser(string email)
         {

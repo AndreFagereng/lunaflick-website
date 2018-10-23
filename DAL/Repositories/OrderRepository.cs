@@ -2,11 +2,12 @@
 using Oblig1.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using DAL;
 
 namespace Oblig1.DAL
 {
 
-    public class OrderRepository
+    public class OrderRepository : IOrderRepository
     {
 
         /// <summary>

@@ -6,8 +6,8 @@ using System.Linq;
 
 namespace Oblig1.DAL
 {
-    public class MovieRepository
-	{
+    public class MovieRepository : IMovieRepository
+    {
 
         /// <summary>
         /// Denne metoden kjøres for å hente ut alle filmene i databasen på et format vi syntes
@@ -24,10 +24,10 @@ namespace Oblig1.DAL
         /// <returns>Returnerer en liste som inneholder lister, med filmer i forskjellige sjangere.</returns>
         public List<MovieListViewModel> getAllMovies()
         {
-            
+
             List<MovieListViewModel> listMovieVM = new List<MovieListViewModel>();
-            
-            using(var context = new LunaContext())
+
+            using (var context = new LunaContext())
             {
                 List<string> a = context.Movies.Select(m => m.Genre).Distinct().ToList();
                 foreach (var genre in a)
@@ -36,9 +36,9 @@ namespace Oblig1.DAL
                     MLVM.List = new List<Movie>();
                     MLVM.listName = genre;
 
-                    foreach(var movie in context.Movies)
+                    foreach (var movie in context.Movies)
                     {
-                        if(movie.Genre == genre)
+                        if (movie.Genre == genre)
                         {
                             Movie tempMovie = new Movie
                             {
@@ -53,8 +53,8 @@ namespace Oblig1.DAL
                                 MovieId = movie.MovieId,
                                 Director = movie.Director,
                                 Genre = movie.Genre
-                                
-                                
+
+
                             };
 
                             MLVM.List.Add(tempMovie);

@@ -9,68 +9,82 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class LunaBLL
+    public class LunaBLL : ILunaLogic
     {
+        private IMovieRepository _movieRepository;
+        private IUserRepository _userRepository;
+        private IOrderRepository _orderRepository;
 
-        //DETTE ER EN ENDRING
+        public LunaBLL()
+        {
+            _movieRepository = new MovieRepository();
+            _userRepository = new UserRepository();
+            _orderRepository = new OrderRepository();
+        }
+
+        public LunaBLL(IMovieRepository stub)
+        {
+            _movieRepository = stub;
+        }
+
+        public LunaBLL(IUserRepository stub)
+        {
+            _userRepository = stub;
+        }
+
+        public LunaBLL(IOrderRepository stub)
+        {
+            _orderRepository = stub;
+        }
+
         public List<MovieListViewModel> getAllMovies()
         {
-            var LunaDal = new MovieRepository();
-            return LunaDal.getAllMovies();
+            return _movieRepository.getAllMovies();
         }
 
         public MovieViewModel MovieDetail(int id)
         {
-            var LunaDal = new MovieRepository();
-            return LunaDal.MovieDetail(id);
+            return _movieRepository.MovieDetail(id);
         }
 
         public List<JsOrderViewModel> UsersOrders(int userid)
         {
-            var LunaDal = new OrderRepository();
-            return LunaDal.UsersOrders(userid);
+            return _orderRepository.UsersOrders(userid);
         }
 
         public List<JsMovieViewModel> OrderMovie(int orderId)
         {
-            var LunaDal = new OrderRepository();
-            return LunaDal.OrderMovie(orderId);
+            return _orderRepository.OrderMovie(orderId);
         }
 
         public Movie GetMovieById(int id)
         {
-            var LunaDal = new OrderRepository();
-            return LunaDal.GetMovieById(id);
+            return _orderRepository.GetMovieById(id);
         }
 
         public bool createOrder(List<Movie> movieList, string userEmail)
         {
-            var LunaDal = new UserRepository();
-            return LunaDal.createOrder(movieList, userEmail);
+            return _userRepository.createOrder(movieList, userEmail);
         }
 
         public bool AddCustomer(UserViewModel inUser)
         {
-            var LunaDal = new UserRepository();
-            return LunaDal.AddCustomer(inUser);
+            return _userRepository.AddCustomer(inUser);
         }
 
         public bool UserInDB(UserViewModel user)
         {
-            var LunaDal = new UserRepository();
-            return LunaDal.UserInDB(user);
+            return _userRepository.UserInDB(user);
         }
 
         public UserViewModel GetDetailedUser(string userEmail)
         {
-            var LunaDal = new UserRepository();
-            return LunaDal.GetDetailedUser(userEmail);
+            return _userRepository.GetDetailedUser(userEmail);
         }
-  
+
         public User GetUser(string email)
         {
-            var LunaDal = new UserRepository();
-            return LunaDal.GetUser(email);
+            return _userRepository.GetUser(email);
         }
 
     }

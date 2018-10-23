@@ -2,10 +2,11 @@
 using Oblig1.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Oblig1.DAL;
 
 namespace DAL.Repositories
 {
-    class MovieRepositoryStub
+    class MovieRepositoryStub : IMovieRepository
     {
         public List<MovieListViewModel> getAllMovies()
         {
