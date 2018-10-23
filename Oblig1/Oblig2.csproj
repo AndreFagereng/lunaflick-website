@@ -216,7 +216,8 @@
     <Content Include="Views\Home\DetailedMovieModal.cshtml" />
     <Content Include="Views\Home\_MoviePartial.cshtml" />
     <Content Include="Views\Home\MySite.cshtml" />
-    <Content Include="Views\Admin\AdminLogin.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\AdminPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

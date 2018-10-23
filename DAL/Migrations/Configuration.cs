@@ -1,6 +1,7 @@
 namespace Oblig1.Migrations
 {
-    using Oblig1.DAL;
+    using DAL;
+    using global::DAL;
     using Oblig1.Models;
     using System;
     using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace Oblig1.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Oblig1.DAL.LunaContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<LunaContext>
     {
         public Configuration()
         {
@@ -16,7 +17,7 @@ namespace Oblig1.Migrations
             ContextKey = "Oblig1.Models.LunaContext";
         }
 
-        protected override void Seed(Oblig1.DAL.LunaContext context)
+        protected override void Seed(LunaContext context)
         {
             var allMovies = new List<Movie>
             {

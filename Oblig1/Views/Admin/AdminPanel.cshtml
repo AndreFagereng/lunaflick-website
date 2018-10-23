@@ -1,0 +1,105 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale=1">
+    <title>Lunaflicks</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid fill">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a id="nav-header" class="navbar-brand" href="adminpanel.html">Admin panel</a>
+                </div>
+                <ul class="nav navbar-right navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            admin
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Administrasjonspanel</a></li>
+                            <li><a href="#">Log Out</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav navbar-nav" id="login-link" data-toggle="modal" data-target="#loginModal" style="display: none">
+                        <a href="#">Logg inn</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="mypage">
+                <div class="jumbotron mypage-section">
+                    <h1 class="mypage-header">Administrasjonspanel</h1>
+                    <p>List alle filmer, brukere og ordre. Gjør endringer der du vil.</p>
+                </div>
+                <div class="col-sm-12 mypage-section">
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <div class="col-xs-4">
+                            <a href="users.html">Vis brukere</a>
+                        </div>
+                        <div class="col-xs-4">
+                            <a href="movies.html">Vis filmer</a>
+                        </div>
+                        <div class="col-xs-4">
+                            <a href="orders.html">Vis ordre</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="container-fluid mypage-section" style="padding-top: 0">
+                        <h2 class="mypage-header">Nylige bestillinger</h2>
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <select id="" class="form-control selectpicker" style="text-align: center">
+                                <option value="Action">28.08.1964</option>
+                                <option value="Drama">28.08.1964</option>
+                                <option value="Comedy">28.08.1964</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-8 col-xs-offset-2 customer-table">
+                            <table class="table">
+                                <thead>
+                                    <tr style="font-size: 16px">
+                                        <th scope="col">9402</th>
+                                        <th scope="col">28.08.1964</th>
+                                        <th scope="col" style="text-align: right">kr 597,00</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td style="text-align: left">Deadpool 2</td>
+                                        <td style="text-align: right">kr 199,00</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td style="text-align: left">The Notebook</td>
+                                        <td style="text-align: right">kr 199,00</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td style="text-align: left">Schindlers List</td>
+                                        <td style="text-align: right">kr 199,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="admin_scripts.js"></script>
+</body>
+</html>

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminModel\Login.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderLine.cs" />

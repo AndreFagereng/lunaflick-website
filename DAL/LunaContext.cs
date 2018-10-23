@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Model.AdminModel;
 
 namespace Oblig1.DAL
 {
@@ -30,6 +31,7 @@ namespace Oblig1.DAL
 		public DbSet<Movie> Movies { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderLine> OrderLines { get; set; }
+        //public DbSet<AdminUser> AdminUsers { get; set; }
 
 
 
