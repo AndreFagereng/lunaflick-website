@@ -8,7 +8,7 @@ namespace Oblig1.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
+        // GET: Admin Hei all sammen
         public ActionResult AdminLogin()
         {
             return View();
