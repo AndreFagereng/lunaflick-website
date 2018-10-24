@@ -1,8 +1,7 @@
-namespace Oblig1.Migrations
+namespace PresentationLayer.Migrations
 {
     using DAL;
-    using global::DAL;
-    using Oblig1.Models;
+    using Model.Models;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -390,9 +389,9 @@ namespace Oblig1.Migrations
             {
                 context.Movies.Add(m);
             }
-
-
+			
         }
+
 
     }
 }

@@ -1,4 +1,4 @@
-namespace Oblig1.Migrations
+namespace PresentationLayer.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

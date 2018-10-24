@@ -1,0 +1,57 @@
+﻿@model Model.Models.Movie
+
+    
+<div id="wrapper" class="col-lg-2 col-md-4 col-sm-4 col-xs-6" data-toggle="modal" data-target="#imageModal">
+    
+
+        <a class="thumbnail" >
+            <img class="img-responsive movie-img" alt="" style=" height: 250px" src="@Html.DisplayFor(modelItem => modelItem.Poster)">
+
+        </a>|
+        <a href="#detailModal"  data-toggle="modal" data-toCart="true"
+           data-release="@Model.ReleaseYear"
+           data-title="@Model.Title"
+           data-storyline="@Model.Storyline"
+           data-duration="@Model.Duration"
+           data-director="@Model.Director"
+           data-id="@Model.MovieId"
+           data-poster="@Model.Poster"
+           data-price="@Model.Price"
+           data-genre="@Model.Genre"
+           data-rating="@Model.Stars">
+            
+            <div class="img-overlay">
+                <div class="img-overlay-header img-overlay-text">@Html.DisplayFor(modelItem => modelItem.Title)</div>
+                <div class="img-overlay-text">
+                    <div>
+                        @Html.DisplayNameFor(modelItem => modelItem.ContentRating):
+                        @Html.DisplayFor(modelItem => modelItem.ContentRating)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => modelItem.ReleaseYear) :
+                        @Html.DisplayFor(modelItem => modelItem.ReleaseYear)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => modelItem.Price) : kr
+                        @Html.DisplayFor(modelItem => modelItem.Price)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => modelItem.Duration) :
+                        @Html.DisplayFor(modelItem => modelItem.Duration)
+                    </div>
+                                        
+                    <button type="button" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-star" style="color:#DAA520"></span>
+                        @Html.DisplayFor(modelItem => modelItem.Stars)/10
+
+                    </button>
+        
+                    <div>
+
+                    </div>
+
+                </div>
+            </div>
+        </a>
+    
+</div>

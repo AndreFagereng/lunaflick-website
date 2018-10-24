@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Oblig1.Models;
-using Oblig1.ViewModels;
+using Model.Models;
+using Model.ViewModels;
 
 namespace BLL
 {

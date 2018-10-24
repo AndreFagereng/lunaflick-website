@@ -1,0 +1,71 @@
+﻿@using Model.Models
+
+	<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="row">
+                <div class="loginmodal-container">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h1>Din handlevogn</h1><br>
+                    <table class="summary_items table">
+                        <tbody class="cart_item">
+                            <span id="emptyCartMsg" style="text-align: center"><p>Du har ingen filmer i handlevognen din.</p></span>
+                            @{ double total = 0;}
+                            @foreach (var item in (List<Movie>)Session["Cart"])
+                            {
+
+                                total = total + item.Price;
+                                <tr class="checkoutCount">
+                                    <td>
+                                        @item.Title
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        @item.Price
+                                    </td>
+                                    <td style="width: 5% !important">
+                                        <button id="@item.MovieId" type="button" class="removeFromCart btn-xs btn-primary btn-delete-movie">
+                                            ✕
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            }
+                            @if (total > 0)
+                            {
+                                <tr>
+                                    <td>
+                                        Total:
+                                    </td>
+                                    <td></td>
+
+                                    <td>
+                                        @total
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <input type="submit" name="kasse" id="checkoutButton" class="login loginmodal-submit" value="GÅ TIL BETALING" data-toggle="modal" data-dismiss="modal" data-target="#checkoutModal" />
+                </div>
+			</div>
+		</div>
+        
+	</div>
+   <script src="/Scripts/general_script.js"></script>
+   <script>
+		$(document).ready(function () {
+			$(".removeFromCart").unbind().click(function () {
+				var id = $(this).attr("id");
+                $.ajax({
+					url: '@Url.Action("RemoveFromCart", "Home")',
+                    data: { id: id },
+                    success: function () {
+                            window.location.reload();
+                        }
+                    });
+                })
+            })
+   </script>

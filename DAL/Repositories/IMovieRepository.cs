@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Oblig1.ViewModels;
+using Model.ViewModels;
 
-namespace Oblig1.DAL
+namespace DAL.Repositories
 {
     public interface IMovieRepository
     {

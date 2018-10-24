@@ -1,6 +1,7 @@
-﻿using Oblig1.DAL;
-using Oblig1.Models;
-using Oblig1.ViewModels;
+﻿using DAL;
+using DAL.Repositories;
+using Model.Models;
+using Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,5 +88,5 @@ namespace BLL
             return _userRepository.GetUser(email);
         }
 
-    }
+	}
 }

@@ -1,4 +1,4 @@
-﻿using Oblig1.Models;
+﻿using Model.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Oblig1.ViewModels
+namespace Model.ViewModels
 {
     /// <summary>
     /// En ViewModel for innhenting av kortnr, samt kort-brukers informasjon.

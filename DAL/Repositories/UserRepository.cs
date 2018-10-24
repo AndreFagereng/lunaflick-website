@@ -1,5 +1,5 @@
-﻿using Oblig1.Models;
-using Oblig1.ViewModels;
+﻿using Model.Models;
+using Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,9 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Web;
-using Luna_Experiment.Utilities.Security;
+using DAL.Utilities.Security;
 
-namespace Oblig1.DAL
+namespace DAL.Repositories
 {
     /// <summary>
     /// Fungerer som et layer mellom kontroller og databasen slik at

@@ -1,4 +1,4 @@
-﻿using Oblig1.Models;
+﻿using Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -6,8 +6,10 @@ using System.Linq;
 using System.Web;
 using Model.AdminModel;
 
-namespace Oblig1.DAL
+namespace DAL
 {
+
+
     /// <summary>
     /// Denne klassen har ansvaret for interaksjon med databasen.
     /// </summary>
@@ -31,9 +33,12 @@ namespace Oblig1.DAL
 		public DbSet<Movie> Movies { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderLine> OrderLines { get; set; }
-        //public DbSet<AdminUser> AdminUsers { get; set; }
+		//public DbSet<AdminUser> AdminUsers { get; set; }
 
-
+		public void FixEfProviderServicesProblem()
+		{
+			var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+		}
 
 	}
 }

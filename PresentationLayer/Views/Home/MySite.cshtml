@@ -1,0 +1,135 @@
+﻿@model Model.ViewModels.UserViewModel
+
+<div class="container-fluid fill">
+
+    <div class="container">
+        <div class="mypage">
+            <div class="jumbotron mypage-section">
+                <h1 class="mypage-header">Min side</h1>
+                <p>Her kan du se en fullstendig oversikt over dine ordre, i tillegg til den informasjonen som er lagret på deg.</p>
+            </div>
+            
+            <div class="col-sm-12 mypage-section">
+                <div class="col-xs-6 col-xs-offset-3">
+                    <div class="col-xs-6">
+                        <p class="mypage-text"><b>Navn: </b></p>
+                        <p class="mypage-text"><b>@Html.DisplayNameFor(model => model.Email)</b></p>
+                        <p class="mypage-text"><b>@Html.DisplayNameFor(model => model.Address)</b></p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="mypage-text">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</p>
+                        <p class="mypage-text">@Html.DisplayFor(model => model.Email)</p>                        
+                        <p class="mypage-text">@Html.DisplayFor(model => model.Address)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="container-fluid mypage-section" style="padding-top: 0">
+                    <h2 class="mypage-header">Mine bestillinger</h2>
+                    <div class="col-xs-4 col-xs-offset-4">
+                        <select id="drop" class="form-control selectpicker">
+                            <option value="Velg Ordre" selected disabled hidden>Velg Ordre</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-8 col-xs-offset-2 customer-table">
+                        <table class="table">
+                            <thead>
+                                <tr style="font-size: 16px">
+                                    
+                                    <th scope="col">Filmnavn</th>
+                                    <th scope="col" style="text-align: right">Pris</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="visNavn" style="text-align: left"></td>
+                                    
+                                    <td id="visPris" style="text-align: right"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+       // Koden er inspirert av kode fra forelesning
+        
+        $.ajax({
+            url: '/Home/JsGetOrders',
+            type: 'GET',
+            dataType: 'json',
+            success: function (JsOrderViewModel) {
+                VisDropDown(JsOrderViewModel);
+                
+
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+
+        
+
+        $("#drop").change(function () {
+            var id = $(this).val();
+            $.ajax({
+                url: '/Home/JsLineData/' + id,     
+                type: 'GET',
+                dataType: 'json',
+                success: function (JsLineData) {
+                    VisNavn(JsLineData);
+                    VisPris(JsLineData);
+
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        });
+
+    })
+
+    function VisDropDown(JsOrderViewModel) {
+        var utStreng = "";
+        for (var i in JsOrderViewModel) {
+            utStreng += "<option value='" + JsOrderViewModel[i].OrderId + "'>" + "Ordrenummer " + JsOrderViewModel[i].OrderId +"        "+ JsOrderViewModel[i].OrderDate + "</option>";
+        }
+        $("#drop").append(utStreng);
+        
+    }
+
+
+    function VisNavn(JsMovieViewModel) {
+     
+        var utStreng = "";
+        for (var i in JsMovieViewModel) {
+
+            utStreng += JsMovieViewModel[i].Title + "<br>";
+
+
+        }
+
+        $("#visNavn").html(utStreng);
+    }
+    function VisPris(JsMovieViewModel) {
+        //var utStreng = OrdreMovieViewModel[1].MovieId + "" + OrdreMovieViewModel[1].Title + " " + OrdreMovieViewModel[1].Price + "";
+        var utStreng = "";
+        for (var i in JsMovieViewModel) {
+            utStreng += JsMovieViewModel[i].Price + "<br>";
+
+        }
+
+        $("#visPris").html(utStreng);
+    }
+
+
+</script>
+

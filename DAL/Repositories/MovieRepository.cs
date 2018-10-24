@@ -1,10 +1,9 @@
-﻿using Oblig1.DAL;
-using Oblig1.ViewModels;
-using Oblig1.Models;
+﻿using Model.ViewModels;
+using Model.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Oblig1.DAL
+namespace DAL.Repositories
 {
     public class MovieRepository : IMovieRepository
     {

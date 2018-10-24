@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +57,14 @@
     <Compile Include="Migrations\201810021456384_firstMigration.cs" />
     <Compile Include="Migrations\201810021456384_firstMigration.Designer.cs">
       <DependentUpon>201810021456384_firstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810231952212_initialMigration.cs" />
+    <Compile Include="Migrations\201810231952212_initialMigration.Designer.cs">
+      <DependentUpon>201810231952212_initialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810240747436_AdminBool.cs" />
+    <Compile Include="Migrations\201810240747436_AdminBool.Designer.cs">
+      <DependentUpon>201810240747436_AdminBool.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +95,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810021456384_firstMigration.resx">
       <DependentUpon>201810021456384_firstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810231952212_initialMigration.resx">
+      <DependentUpon>201810231952212_initialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810240747436_AdminBool.resx">
+      <DependentUpon>201810240747436_AdminBool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

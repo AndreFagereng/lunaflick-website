@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 
-namespace Luna_Experiment.Utilities.Security
+namespace DAL.Utilities.Security
 {
     /// <summary>
     /// Lånt implementasjon fra sikkerhets-kompendiet.

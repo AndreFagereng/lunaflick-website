@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Oblig1.ViewModels
+namespace Model.ViewModels
 {
     /// <summary>
     /// En view-modell for user-modellen. Required-attributtene fungerer ikke

@@ -1,10 +1,10 @@
-﻿using Oblig1.Models;
-using Oblig1.ViewModels;
+﻿using Model.Models;
+using Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Oblig1.DAL
+namespace DAL.Repositories
 {
 
     public class OrderRepositoryStub : IOrderRepository

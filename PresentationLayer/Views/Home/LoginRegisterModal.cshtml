@@ -1,0 +1,109 @@
+﻿@model Model.ViewModels.UserViewModel
+
+<!--Modal for login-->
+<div  class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+
+        <div class="row">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active tab-style">
+                    <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Logg inn</a>
+                </li>
+                <li role="presentation" class="tab-style">
+                    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Registrer</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <div class="row">
+                    <div class="loginmodal-container">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h1>Logg inn på din bruker</h1><br>
+                        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <fieldset>
+
+                                <div class="editor-field">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.Email) } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" } )
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.Password), @type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" } )
+                                </div>
+
+                                <p>
+                                    <input type="submit"  value="Logg inn" class="login loginmodal-submit" />
+                                </p>
+
+                            </fieldset>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <!--Modal for register-->
+            <div role="tabpanel" class="tab-pane" id="profile">
+                <div class="loginmodal-container">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h1>Registrer ny bruker</h1><br>
+                    @using (Html.BeginForm(FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <fieldset>
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "width-49", @id = "form-firstname", @placeholder = Html.DisplayNameFor(model => model.FirstName) } })
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "width-49", @id = "form-lastname", @placeholder = Html.DisplayNameFor(model => model.LastName) } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "test-danger" })
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "form-email", @placeholder = Html.DisplayNameFor(model => model.Email) } })
+                                <span id="email-error"><p class="form-error">Skriv inn en gyldig epost addresse.</p></span>
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @id = "form-address", @placeholder = Html.DisplayNameFor(model => model.Address) } })
+                                @Html.ValidationMessageFor(model => model.Address)
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "width-49", @id = "form-zipnr", @placeholder = Html.DisplayNameFor(model => model.ZipCode) } })
+                                @Html.ValidationMessageFor(model => model.ZipCode)
+                                @Html.EditorFor(model => model.PostalArea, new { htmlAttributes = new { @class = "width-49", @id = "form-city", @placeholder = Html.DisplayNameFor(model => model.PostalArea) } })
+                                @Html.ValidationMessageFor(model => model.PostalArea)
+                                <span id="zipnr-error"><p class="form-error">Skriv inn et gyldig postnummer.</p></span>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "form-password", @placeholder = Html.DisplayNameFor(model => model.Password), @type = "password" } })
+                                <span class="form-error" id="password-error">Må inneholde minst 8 tegn.</span>
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                            <div> @ViewBag.UserAlreadyInDB</div>
+                            <p>
+                                <input type="submit" formaction="@Url.Action("Register", "Home")" value="Registrer" id="registerButton" class="login loginmodal-submit" />
+                            </p>
+
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/validation_register.js"></script>

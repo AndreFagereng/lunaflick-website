@@ -1,10 +1,11 @@
-﻿using Oblig1.Models;
-using Oblig1.ViewModels;
+﻿using Model.Models;
+using Model.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using DAL;
+using Model.Models;
 
-namespace Oblig1.DAL
+namespace DAL.Repositories
 {
 
     public class OrderRepository : IOrderRepository
@@ -75,5 +76,5 @@ namespace Oblig1.DAL
                 return newMovie;
             }
         }
-    }
+	}
 }

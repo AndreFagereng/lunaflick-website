@@ -1,0 +1,64 @@
+﻿@model Model.ViewModels.CheckoutViewModel 
+<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="row">
+            <div class="loginmodal-container">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h1>Betalingsmetode</h1><br>
+                @using (Html.BeginForm(FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <fieldset>
+                        <form>
+                            <div>
+                                @Html.EditorFor(model => model.CardNr, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.CardNr), @maxlength = "19", @id = "form-credit-card" } })
+                                @Html.ValidationMessageFor(model => model.CardNr)
+                                <span class="form-error" id="checkout-card-number-error">Må være på format XXXX XXXX XXXX XXXX.</span>
+                            </div>
+
+                            <div>
+                                @Html.EditorFor(model => model.CardDate, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.CardDate), @maxlength = "7", @id = "form-credit-date", @style = "width:69%" } })
+                                @Html.ValidationMessageFor(model => model.CardDate)
+                            </div>
+
+                            <div>
+                                @Html.EditorFor(model => model.CCV, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.CCV), @maxlength = "3", @id = "form-credit-cvc", @style = "width:29%" } })
+                                @Html.ValidationMessageFor(model => model.CCV)
+                                <span class="form-error" id="checkout-card-date-error">Utløpsdato må være på format MM YYYY.<br></span>
+                                <span class="form-error" id="checkout-card-cvc-error">CVC er 3 sifre du finner bak på kortet ditt.</span>
+                            </div>
+                        </form>
+
+                        <h1 style="margin-top: 25px">Betalingsinformasjon</h1><br>
+                        <form>
+                            <div>
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.Name), @id = "checkout-name" } })
+                                @Html.ValidationMessageFor(model => model.Name)
+                            </div>
+                            <div>
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.Address), @id = "checkout-address" } })
+                                @Html.ValidationMessageFor(model => model.Address)
+                            </div>
+                            <div>
+                                @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.ZipCode), @maxlength = "4", @id = "checkout-form-zip" } })
+                                @Html.ValidationMessageFor(model => model.ZipCode)
+                                <span class="form-error" id="checkout-zipnr-error">Skriv inn et gyldig postnummer.</span>
+                            </div>
+                            <div>
+                                @Html.EditorFor(model => model.PostalArea, new { htmlAttributes = new { @placeholder = Html.DisplayNameFor(model => model.PostalArea), @id = "checkout-city" } })
+                                @Html.ValidationMessageFor(model => model.PostalArea)
+                            </div>
+                        </form>
+
+                        <input formaction="@Url.Action("CheckoutComplete", "Home")" id="buyButton" style="background-color: rgb(0, 204, 102)" type="submit" name="kasse" class="login loginmodal-submit" value="KJØP">
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/validation_checkout.js"></script>
