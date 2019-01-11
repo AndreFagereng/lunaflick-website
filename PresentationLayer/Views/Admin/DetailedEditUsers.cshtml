@@ -1,0 +1,72 @@
+﻿@model Model.Models.User
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="container-fluid fill">
+            <div class="container">
+                <div class="mypage">
+                    <div class="jumbotron mypage-section">
+                        <h1 class="mypage-header">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h1>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="container-fluid mypage-section" style="padding-top: 0">
+                            <div class="col-xs-4 col-xs-offset-4 customer-table">
+                                <form style="text-align: left">
+                                    <div class="form-group">
+                                        @Html.HiddenFor(model => model.UserId)
+                                        <label for="firstname">Fornavn</label>
+                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Skriv inn fornavn", @Value = HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.FirstName).ToHtmlString()) } } )
+                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">Etternavn</label>
+
+                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @id = "lastname", @placeholder = "Skriv inn etternavn", @Value = HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.LastName).ToHtmlString()) } })
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @disabled="disabled", @class = "form-control", @id = "exampleInputEmail1", @placeholder = "Skriv inn email", @Value = @Html.DisplayFor(model => model.Email) } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Adresse</label>
+
+                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "address", @placeholder = "Skriv inn adresse", @Value = HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.Address).ToHtmlString()) } })
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="city">Poststed</label>
+
+                                        @Html.EditorFor(model => model.PostalAddress.PostalArea, new { htmlAttributes = new { @class = "form-control", @id = "firstname", @placeholder = "Skriv inn poststed", @Value = HttpUtility.HtmlDecode(@Html.DisplayFor(model => model.PostalAddress.PostalArea).ToHtmlString()) } })
+                                        @Html.ValidationMessageFor(model => model.PostalAddress.PostalArea, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="postnr">Postnummer</label>
+
+                                        @Html.EditorFor(model => model.PostalAddress.ZipCode, new { htmlAttributes = new { @class = "form-control", @id = "firstname", @placeholder = "Skriv inn postnummer", @Value = @Html.DisplayFor(model => model.PostalAddress.ZipCode) } })
+                                        @Html.ValidationMessageFor(model => model.PostalAddress.ZipCode, "", new { @class = "form-error" })
+                                    </div>
+                                    <button type="submit" class="btn btn-success" style="margin-bottom:20px;">Lagre</button>
+                                    <a href="/Admin/EditUsers">
+                                        <button type="button" class="btn btn-primary" style="margin-bottom:20px;">Tilbake</button>
+                                    </a>    
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>

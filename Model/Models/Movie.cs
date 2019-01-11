@@ -29,7 +29,7 @@ namespace Model.Models
         public string ContentRating { get; set; }
 		public string Poster { get; set; }
         public List<OrderLine> OrderLine { get; set; }
+        public byte IsAvailable { get; set; }
 
-
-	}
+    }
 }

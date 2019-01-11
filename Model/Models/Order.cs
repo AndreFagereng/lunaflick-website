@@ -14,5 +14,6 @@ namespace Model.Models
 		public DateTime OrderDate { get; set; }
 		public User User { get; set; }
 		public List<OrderLine> OrderLine { get; set; }
+        public byte Status { get; set; }
 	}
 }

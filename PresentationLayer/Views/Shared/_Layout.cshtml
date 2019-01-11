@@ -10,7 +10,7 @@
     <title>Lunaflick</title>
 
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/Content/stylez.css">
+    <link rel="stylesheet" type="text/css" href="/Content/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -23,7 +23,7 @@
         <nav class="navbar navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
-                    <a id="nav-header" class="navbar-brand" href="/Home/Index">Lunaflicks</a>
+                    <a id="nav-header" class="navbar-brand" href="/Home/Index">Lunaflick</a>
                 </div>
                 
                 <ul class="nav navbar-right navbar-nav">
@@ -60,6 +60,7 @@
         
         <div class="container body-content">
             <h3 class="register-msg">@TempData["msg"]</h3>
+            <h3 class="register-msg">@TempData["deactivated"]</h3>
             @RenderBody()
         </div>
 

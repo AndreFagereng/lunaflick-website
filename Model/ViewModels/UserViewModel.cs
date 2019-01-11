@@ -16,9 +16,8 @@ namespace Model.ViewModels
     /// </summary>
 	public class UserViewModel
 	{
-        
-       
-        
+
+        public int UserId { get; set; }
         [DisplayName("Epost")]
         [Required(ErrorMessage = "Epost må oppgis")]
         public string Email { get; set; }

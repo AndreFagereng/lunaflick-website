@@ -1,0 +1,96 @@
+﻿@model Model.Models.Movie
+@{
+    ViewBag.Title = "DetailedAddMovie";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body class="editmovie">
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="container-fluid fill">
+            <div class="container">
+                <div class="mypage">
+                    <div class="jumbotron mypage-section">
+                        <h1 id="movie_title" class="mypage-header">@Html.DisplayFor(model => model.Title)</h1>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="container-fluid mypage-section" style="padding-top: 0">
+                            <div class="col-xs-4 col-xs-offset-4 customer-table">
+                                <form id="edit_move_form" style="text-align: left">
+                                    <div class="form-group">
+                                        <label for="edit_movie_title">Tittel</label>
+
+                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @id = "edit_movie_title", @class = "form-control", @placeholder = "Skriv inn tittel på film" } })
+                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_genre">Sjanger</label>
+
+                                        @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @id = "edit_movie_genre", @class = "form-control", @placeholder = "Skriv inn sjanger" } })
+                                        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_playtime">Spilletid</label>
+
+                                        @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @id = "edit_movie_playtime", @class = "form-control", @placeholder = "Skriv inn spilletid" } })
+                                        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_release">Utgitt(år)</label>
+
+                                        @Html.EditorFor(model => model.ReleaseYear, new { htmlAttributes = new { @id = "edit_movie_release", @class = "form-control", @placeholder = "Skriv inn utgivelsesår" } })
+                                        @Html.ValidationMessageFor(model => model.ReleaseYear, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_director">Regissør</label>
+
+                                        @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @id = "edit_movie_director", @class = "form-control", @placeholder = "Skriv inn regissør" } })
+                                        @Html.ValidationMessageFor(model => model.Director, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_rating">Aldersgrense</label>
+
+                                        @Html.EditorFor(model => model.ContentRating, new { htmlAttributes = new { @id = "edit_movie_rating", @class = "form-control", @placeholder = "Skriv inn aldersgrense" } })
+                                        @Html.ValidationMessageFor(model => model.ContentRating, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_price">Pris</label>
+
+                                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @id = "edit_movie_price", @class = "form-control", @placeholder = "Skriv inn pris" } })
+                                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_price">Stjerner (0-10)</label>
+
+                                        @Html.EditorFor(model => model.Stars, new { htmlAttributes = new { @id = "edit_movie_price", @class = "form-control", @placeholder = "Skriv inn antall stjerner" } })
+                                        @Html.ValidationMessageFor(model => model.Stars, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_price">Bilde-URL</label>
+
+                                        @Html.EditorFor(model => model.Poster, new { htmlAttributes = new { @id = "edit_movie_price", @class = "form-control", @placeholder = "Skriv inn gyldig bilde-url" } })
+                                        @Html.ValidationMessageFor(model => model.Poster, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit_movie_plot">Plot</label>
+
+                                        @Html.TextAreaFor(model => model.Storyline, new { @rows = "8", @id = "edit_movie_plot", @class = "form-control", @placeholder = "Sammendrag..." })
+                                    </div>
+                                    <button type="submit" class="btn btn-success" style="margin-bottom:20px;">Lagre</button>
+                                    <a href="/Admin/EditMovies">
+                                        <button type="button" class="btn btn-primary" style="margin-bottom:20px;">Tilbake</button>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="admin_scripts.js"></script>
+</body>
+

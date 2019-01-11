@@ -24,6 +24,7 @@ namespace Model.Models
         
         public string Address { get; set; }
 		public bool AdminPrivileges { get; set; }
+        public byte AccountStatus { get; set; }
 		public virtual PostalAddress PostalAddress { get; set; }
 		public virtual List<Order> OrderList { get; set; }
 

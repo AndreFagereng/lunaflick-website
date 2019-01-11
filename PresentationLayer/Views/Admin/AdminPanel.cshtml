@@ -1,105 +1,63 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width = device-width, initial-scale=1">
-    <title>Lunaflicks</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="stylez.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
-</head>
-<body>
+<body scroll="no">
     <div class="container-fluid fill">
-        <nav class="navbar navbar-inverse">
-            <div class="container">
-                <div class="navbar-header">
-                    <a id="nav-header" class="navbar-brand" href="AdminPanel">Admin panel</a>
-                </div>
-                <ul class="nav navbar-right navbar-nav">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            Admin
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Administrasjonspanel</a></li>
-                            <li><a href="#">Logg ut</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav navbar-nav" id="login-link" data-toggle="modal" data-target="#loginModal" style="display: none">
-                        <a href="#">Logg inn</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
         <div class="container">
             <div class="mypage">
                 <div class="jumbotron mypage-section">
-                    <h1 class="mypage-header">Administrasjonspanel</h1>
-                    <p>List alle filmer, brukere og ordre. Gjør endringer der du vil.</p>
+                    <h1 class="mypage-header">Statistikk</h1>
+                    <p>Oversikt av statistikk fra databasen</p>
                 </div>
                 <div class="col-sm-12 mypage-section">
-                    <div class="col-xs-6 col-xs-offset-3">
-                        <div class="col-xs-4">
-                            <a href="users.html">Vis brukere</a>
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <div class="col-xs-2">
+                            <a href="/Admin/AdminPanel" class="admin-nav-link"><i class="fas fa-chart-pie" style="font-size: 40px"></i><br />Statistikk</a>
                         </div>
-                        <div class="col-xs-4">
-                            <a href="movies.html">Vis filmer</a>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditUsers" class="admin-nav-link"><i class="fas fa-users" style="font-size: 40px"></i><br />Brukere</a>
                         </div>
-                        <div class="col-xs-4">
-                            <a href="orders.html">Vis ordre</a>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditMovies" class="admin-nav-link"><i class="fas fa-film" style="font-size: 40px"></i><br />Filmer</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditOrders" class="admin-nav-link"><i class="fas fa-file-invoice" style="font-size: 40px"></i><br />Vis alle ordre</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/UserOrders" class="admin-nav-link"><i class="fas fa-receipt" style="font-size: 40px"></i><br />Ordre på bruker</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Home/Index" class="admin-nav-link"><i class="fab fa-earlybirds" style="font-size: 40px; color: rgba(230,0,6,.7)"></i><br />Gå til Lunaflick</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12">
-                    <div class="container-fluid mypage-section" style="padding-top: 0">
-                        <h2 class="mypage-header">Nylige bestillinger</h2>
-                        <div class="col-xs-4 col-xs-offset-4">
-                            <select id="" class="form-control selectpicker" style="text-align: center">
-                                <option value="Action">28.08.1964</option>
-                                <option value="Drama">28.08.1964</option>
-                                <option value="Comedy">28.08.1964</option>
-                            </select>
+                    <div class="col-xs-8 col-xs-offset-2">
+                        <div class="col-xs-6">
+                            <canvas id="doughnut-chartcanvas-1" height="320" width="320"></canvas>
                         </div>
-                        <div class="col-xs-8 col-xs-offset-2 customer-table">
-                            <table class="table">
-                                <thead>
-                                    <tr style="font-size: 16px">
-                                        <th scope="col">9402</th>
-                                        <th scope="col">28.08.1964</th>
-                                        <th scope="col" style="text-align: right">kr 597,00</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td style="text-align: left">Deadpool 2</td>
-                                        <td style="text-align: right">kr 199,00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td style="text-align: left">The Notebook</td>
-                                        <td style="text-align: right">kr 199,00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td style="text-align: left">Schindlers List</td>
-                                        <td style="text-align: right">kr 199,00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="col-xs-6">
+                            <canvas id="doughnut-chartcanvas-2" height="320" width="320"></canvas>
                         </div>
+                        <!--User status canvas-->
+                        <script>
+                            var inactiveUsers = @ViewBag.statusArray[0];
+                            var activeUsers = @ViewBag.statusArray[1];
+                            var inactiveMovies = @ViewBag.statusArray[2];
+                            var activeMovies = @ViewBag.statusArray[3];
+                        </script>
                     </div>
                 </div>
+
             </div>
         </div>
+
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="admin_scripts.js"></script>
+
 </body>
-</html>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/Chart.min.js"></script>
+<script src="~/Scripts/Donut.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="~/Scripts/admin_scripts.js"></script>

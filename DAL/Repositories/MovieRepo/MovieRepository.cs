@@ -51,7 +51,8 @@ namespace DAL.Repositories
                                 Storyline = movie.Storyline,
                                 MovieId = movie.MovieId,
                                 Director = movie.Director,
-                                Genre = movie.Genre
+                                Genre = movie.Genre,
+                                IsAvailable = movie.IsAvailable
 
 
                             };

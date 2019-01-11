@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "EditMovies";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model List<Model.Models.Movie>
+
+<body class="users">
+    <div class="container-fluid fill">
+        <div class="container">
+            <div class="mypage">
+                <div class="jumbotron mypage-section">
+                    <h1 class="mypage-header">Alle filmer</h1>
+                    <p>Se og endre alle filmer som ligger i databasen</p>
+                </div>
+                <div class="col-sm-12 mypage-section">
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <div class="col-xs-2">
+                            <a href="/Admin/AdminPanel" class="admin-nav-link"><i class="fas fa-chart-pie" style="font-size: 40px"></i><br />Statistikk</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditUsers" class="admin-nav-link"><i class="fas fa-users" style="font-size: 40px"></i><br />Brukere</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditMovies" class="admin-nav-link"><i class="fas fa-film" style="font-size: 40px"></i><br />Filmer</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditOrders" class="admin-nav-link"><i class="fas fa-file-invoice" style="font-size: 40px"></i><br />Vis alle ordre</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/UserOrders" class="admin-nav-link"><i class="fas fa-receipt" style="font-size: 40px"></i><br />Ordre på bruker</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Home/Index" class="admin-nav-link"><i class="fab fa-earlybirds" style="font-size: 40px; color: rgba(230,0,6,.7)"></i><br />Gå til Lunaflick</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="container-fluid mypage-section" style="padding-top: 0">
+                        <div class="col-xs-8 col-xs-offset-2 customer-table">
+                            <table class="table">
+                                <thead>
+                                    <tr style="font-size: 16px">
+                                        <th scope="col">Film Id</th>
+                                        <th scope="col">Filmtittel</th>
+                                        <th scope="col">Tilgjengelighet</th>
+                                        <th scope="col" style="text-align: right">
+                                            <a href="/Admin/DetailedAddMovie">
+                                                <button style="width: 177px" type="submit" class="btn btn-xs btn-success" id="addMovieButton">&nbsp;Legg til film&nbsp;</button>
+                                            </a>
+                                                </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@item.MovieId</th>
+                                            <td style="text-align: left">@item.Title</td>
+                                            <td style="text-align: left">
+                                                @if (item.IsAvailable == 1)
+                                                {
+												<p style="color:green">Tilgjenglig for kjøp&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</p>
+                                                }
+                                                else
+                                                {
+                                                    <p style="color:red">Ikke tilgjengelig for kjøp</p>
+                                                }
+                                            <td style="text-align: right">
+
+
+                                                <button onclick="location.href='@Url.Action("DetailedEditMovies", "Admin", new { movieId = @item.MovieId })'" type="button" class="btn btn-xs btn-primary">Rediger</button>
+
+                                                <button onclick="location.href='@Url.Action("SetMovieAvailability", "Admin", new { movieId = @item.MovieId })'" type="button" class="btn btn-xs btn-danger deleteUser">Endre tilgjengelighet</button>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/admin_scripts.js"></script>
+</body>

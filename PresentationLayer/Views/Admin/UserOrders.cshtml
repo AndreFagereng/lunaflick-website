@@ -1,0 +1,152 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<body>
+    <div class="container-fluid fill">
+
+        <div class="container">
+            <div class="mypage">
+                <div class="jumbotron mypage-section">
+                    <h1 class="mypage-header">Ordre på bruker</h1>
+                    <p>Oversikt over brukerspesifikke ordre og ordrelinjer</p>
+                </div>
+                <div class="col-sm-12 mypage-section">
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <div class="col-xs-2">
+                            <a href="/Admin/AdminPanel" class="admin-nav-link"><i class="fas fa-chart-pie" style="font-size: 40px"></i><br />Statistikk</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditUsers" class="admin-nav-link"><i class="fas fa-users" style="font-size: 40px"></i><br />Brukere</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditMovies" class="admin-nav-link"><i class="fas fa-film" style="font-size: 40px"></i><br />Filmer</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/EditOrders" class="admin-nav-link"><i class="fas fa-file-invoice" style="font-size: 40px"></i><br />Vis alle ordre</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Admin/UserOrders" class="admin-nav-link"><i class="fas fa-receipt" style="font-size: 40px"></i><br />Ordre på bruker</a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="/Home/Index" class="admin-nav-link"><i class="fab fa-earlybirds" style="font-size: 40px; color: rgba(230,0,6,.7)"></i><br />Gå til Lunaflick</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="test"></div>
+
+                <div class="col-xs-12">
+                    <div class="container-fluid mypage-section" style="margin-top: 20px">
+                        <label class="col-xs-12">Velg bruker fra dropdown-menyen</label>
+                        <div class="col-xs-6 col-xs-offset-3">
+                            <div class="form-group col-xs-8 col-xs-offset-2">
+                                <select class="form-control" id="userSelect" style="text-align:center">
+                                    <option disabled selected hidden>-- Velg bruker --</option> 
+                                </select>
+                            </div>
+                        </div>
+                        <div id="userTable">
+                            <div class="col-xs-4 col-xs-offset-4">
+                                <h3 id="ordercount" class="mypage-header"></h3>
+                            </div>
+                            <div class="col-xs-8 col-xs-offset-2">
+                                <div class="panel-group" id="faqAccordion">
+                                    <!-- Hver individuelle ordre -->
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/admin_scripts.js"></script>
+</body>
+<script type="text/javascript">
+
+    $(function () {
+        $.ajax({
+            url: '/Admin/JsonListUsers',
+            type: 'GET',
+            dataType: 'json',
+            success: function (userdata) {
+                VisDropDown(userdata);
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+
+        $("#userSelect").change(function () {
+            var id = $(this).val();
+            $.ajax({
+                url: '@Url.Action("JsGetOrdersId", "Home")',
+                data: { UserId: id },
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    VisOrdrer(data)
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+            });
+        });
+
+    })
+        function VisDropDown(user) {
+            var utStreng = "";
+            for (var i in user) {
+                utStreng +=  "<option value='" + user[i].UserId + "'>" + user[i].FirstName + " " + user[i].LastName + "</option>";
+            }               
+            $("#userSelect").append(utStreng);
+    }
+
+    function VisOrdrelinjerTilOrdre(ordreID) {
+        var id = ordreID;
+        var ordrelinjedata = null;
+        
+        $.ajax({
+                url: '@Url.Action("JsGetOrderLinesByID", "Admin")',
+                data: { OrderLineId: id},
+                 type: 'GET',
+                async: false,
+                dataType: 'json',
+                success: function(data) {
+                    ordrelinjedata = data;
+                 },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                }
+        });
+        return ordrelinjedata;
+    };
+
+    function VisOrdrer(data) {
+
+        //var string1 = "<div id='ordre'" + ordrer[i].OrderId + "class='panel-collapse collapse' style = 'height: 0px;' > <div class='panel-body'><table class='table'><thead><tr style='font-size: 16px'><th></th><th scope='col'>ID: " + ordrer[i].OrderId + "</th><th scope='col' style='text-align: right'>" + ordrer[i].OrderDate + "</th><th scope='col'></th></tr></thead><tbody>";
+        $("#faqAccordion").html("");
+        var ordercount = 0;
+        for (var i in data) {
+
+            ordercount += 1;
+
+            var total = "";
+            var string1 = "<div class='panel panel-default'><div class='panel-heading accordion-toggle question-toggle collapsed' data-toggle='collapse' data-parent='#faqAccordion' data-target='#ordre" + data[i].OrderId + "' style='cursor:pointer'><h4 class='panel-title'>Ordrenummer: " + data[i].OrderId + ", " + "Dato: " + data[i].OrderDate + "</h4></div><div id='ordre" + data[i].OrderId + "' class='panel-collapse collapse' style='height:0px;'><div class='panel-body'><table class='table'><thead><tr style='font-size:16px'><th></th><th scope='col'>ID: " + data[i].OrderId + "</th><th scope='col' style='text-align: right'>" + data[i].OrderDate + "</th><th></th></tr></thead><tbody>";
+            var tr = "";
+            var alleordrelinjer = VisOrdrelinjerTilOrdre(data[i].OrderId);
+            console.log(alleordrelinjer.length);
+            for (var j in alleordrelinjer) {
+                tr += "<tr><td></td><td style='text-align: left'>" + alleordrelinjer[j].Title + "</td><td style='text-align: right'>kr " + alleordrelinjer[j].Price + "</td><td></td></tr>";
+            }
+
+            var string2 = "</tbody></table></div></div></div>";
+            total = string1 + tr + string2;
+          
+            $("#faqAccordion").append(total);  
+        }
+        $("#ordercount").html(ordercount + " ordre for denne brukeren");
+        scrollToDiv(".panel-heading"); 
+    }  
+</script>

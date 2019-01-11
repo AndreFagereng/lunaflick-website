@@ -56,18 +56,25 @@
 </head>
 <body>
     <div id="frontpage-movies" class="container">
-       
+
         @foreach (var item in Model)
         {
+
             <div class="row">
                 <div class="frontpage-header">
                     <h3>@item.listName</h3>
                 </div>
                 @foreach (var movies in item.List)
                 {
-                    Html.RenderPartial("_MoviePartial", movies);
+                    if (movies.IsAvailable == 1)
+                    {
+                        Html.RenderPartial("_MoviePartial", movies);
+                    }
+
                 }
+
             </div>
+
         }
 
 

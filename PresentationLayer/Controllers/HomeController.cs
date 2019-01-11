@@ -25,7 +25,7 @@ namespace PresentationLayer.Controllers
 
         public HomeController()
         {
-            _LunaBLL = new LunaBLL();
+            _LunaBLL = new LunaLogic();
         }
 
         public HomeController(ILunaLogic stub)
@@ -79,16 +79,26 @@ namespace PresentationLayer.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["msg"] = "Backend validering gikk ikke igjennom, prøv igjen!";
+                return RedirectToAction("Index");
+
             }
             else
             {
                 if (_LunaBLL.UserInDB(user))
                 {
-                    Session[mySessionAuthorized] = true;
-                    Session[mySessionUser] = user.Email;
-                    ViewBag.LoggedIn = true;
 
-                    return RedirectToAction("Index");
+                    if (_LunaBLL.GetUserStatus(user.Email) == 0)
+                    {
+                        TempData["deactivated"] = user.Email + " er dessverre deaktivert, vennligst kontakt brukerstøtte. ";
+                    }
+                    else
+                    {
+                        Session[mySessionAuthorized] = true;
+                        Session[mySessionUser] = user.Email;
+                        ViewBag.LoggedIn = true;
+
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {
@@ -96,7 +106,7 @@ namespace PresentationLayer.Controllers
                     ViewBag.LoggedIn = false;
                     TempData["msg"] = "Vi fant ikke " + user.Email + " i vår database!";
                 }
-                
+
             }
             return RedirectToAction("Index");
         }
@@ -181,7 +191,7 @@ namespace PresentationLayer.Controllers
         {
                 if (Session[mySessionCart] == null)
                 {
-                    var moviesInCart = new List<Movie>(); //Bytte til ViewModel?
+                    var moviesInCart = new List<Movie>(); 
                     var newMovie = _LunaBLL.GetMovieById(id);
                     moviesInCart.Add(newMovie);
                     Session[mySessionCart] = moviesInCart;
@@ -285,6 +295,14 @@ namespace PresentationLayer.Controllers
                 var jsonSerializer = new JavaScriptSerializer();
                 string json = jsonSerializer.Serialize(allOrders);
                 return json;
+        }
+
+        public string JsGetOrdersId(int UserId)
+        {
+            List<JsOrderViewModel> allOrders = _LunaBLL.UsersOrders(UserId);
+            var jsonSerializer = new JavaScriptSerializer();
+            string json = jsonSerializer.Serialize(allOrders);
+            return json;
         }
 
             /// <summary>

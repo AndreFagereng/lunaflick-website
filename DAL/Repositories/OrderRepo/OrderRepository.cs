@@ -3,7 +3,6 @@ using Model.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using DAL;
-using Model.Models;
 
 namespace DAL.Repositories
 {
@@ -27,12 +26,16 @@ namespace DAL.Repositories
                 List<JsOrderViewModel> jsOrderList = new List<JsOrderViewModel>();
                 foreach (var ordre in orderList)
                 {
-                    JsOrderViewModel jsOrder = new JsOrderViewModel
+                    if(ordre.Status == 0)
                     {
-                        OrderId = ordre.OrderId,
-                        OrderDate = ordre.OrderDate.ToString(),
-                    };
-                    jsOrderList.Add(jsOrder);
+                        JsOrderViewModel jsOrder = new JsOrderViewModel
+                        {
+                            OrderId = ordre.OrderId,
+                            OrderDate = ordre.OrderDate.ToString("dd/M/yyyy"),
+                        };
+                        jsOrderList.Add(jsOrder);
+                    }
+                    
                 }
                 return jsOrderList;
             }

@@ -19,6 +19,8 @@ namespace DAL.Repositories
                 OrderDate = "",
             };
             jsOrderList.Add(jsOrder);
+            jsOrderList.Add(jsOrder);
+            jsOrderList.Add(jsOrder);
             return jsOrderList;
 
         }
@@ -42,7 +44,7 @@ namespace DAL.Repositories
             Movie newMovie = new Movie
             {
                 MovieId = id,
-                Title = "Gjøkeredet"
+                Title = "Test"
             };
             return newMovie;
         }

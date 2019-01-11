@@ -1,0 +1,20 @@
+Opened connection at 10/28/2018 10:30:27 PM +01:00
+
+SELECT TOP (1) 
+    [Extent1].[Username] AS [Username], 
+    [Extent1].[Password] AS [Password], 
+    [Extent1].[Salt] AS [Salt]
+    FROM [dbo].[AdminUsers] AS [Extent1]
+    WHERE [Extent1].[Username] = @p__linq__0
+
+
+-- p__linq__0: 'admin' (Type = String, Size = 4000)
+
+-- Executing at 10/28/2018 10:30:27 PM +01:00
+
+-- Completed in 30 ms with result: SqlDataReader
+
+
+
+Closed connection at 10/28/2018 10:30:27 PM +01:00
+

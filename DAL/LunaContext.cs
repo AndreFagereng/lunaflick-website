@@ -23,6 +23,21 @@ namespace DAL
 		{
 			Database.CreateIfNotExists();
 		}
+
+        public void LogToFile(string s)
+        {
+            string log = DateTime.Now.ToString("MMMM") + "_DBlog.txt";
+            var DBLog = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\" + log;
+            var sw = new System.IO.StreamWriter(DBLog, true);
+            sw.WriteLine(s);
+            sw.Close();
+        }
+
+        public void LogFromDB()
+        {
+            Database.Log = s => LogToFile(s);
+        }
+
         /// <summary>
         /// Disse attributtene oppretter tabellene i databasen.
         /// I tabellene har vi fjernet mange-til-mange relasjoner ved å blant annet
@@ -33,7 +48,7 @@ namespace DAL
 		public DbSet<Movie> Movies { get; set; }
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderLine> OrderLines { get; set; }
-		//public DbSet<AdminUser> AdminUsers { get; set; }
+		public DbSet<AdminUser> AdminUsers { get; set; }
 
 		public void FixEfProviderServicesProblem()
 		{

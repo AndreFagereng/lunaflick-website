@@ -90,6 +90,7 @@ namespace DAL.Repositories
                         FirstName = inUser.FirstName,
                         LastName = inUser.LastName,
                         Address = inUser.Address,
+                        AccountStatus = 1
                     };
 
                     //Legger inn nytt postnr og poststed hvis det ikke allerede finnes i databasen.
@@ -185,13 +186,15 @@ namespace DAL.Repositories
             }
         }
 
-        public User GetUser(string email)
+        public User GetUser(string Email)
         {
             using (var context = new LunaContext())
             {
-                var user = context.Users.FirstOrDefault(u => u.Email == email);
+                var user = context.Users.Include("PostalAddress").FirstOrDefault(u => u.Email == Email);
+
                 return user;
             }
         }
+
     }
 }

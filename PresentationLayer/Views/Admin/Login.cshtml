@@ -1,54 +1,49 @@
-﻿@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width = device-width, initial-scale=1">
-    <title>Lunaflicks</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/Content/stylez.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
-</head>
-<body>
-    <div class="container-fluid fill">
-        <nav class="navbar navbar-inverse">
-            <div class="container">
-                <div class="navbar-header">
-                    <a id="nav-header" class="navbar-brand" href="adminpanel.html">Admin panel</a>
-                </div>
-            </div>
-        </nav>
-        <div class="container">
-            <div class="mypage">
-                <div class="jumbotron mypage-section">
-                    <h1 class="mypage-header">Logg inn</h1>
-                </div>
-                <div class="col-xs-12">
-                    <div class="container-fluid mypage-section">
-                        <div class="col-xs-4 col-xs-offset-4">
-                            <form>
-                                <div class="form-group">
-                                    <label for="admin_username">Brukernavn</label>
-                                    <input type="text" class="form-control" id="username">
-                                </div>
-                                <div class="form-group">
-                                    <label for="admin_password">Passord</label>
-                                    <input type="password" class="form-control" id="admin_password">
-                                </div>
-                                <button type="submit" class="btn btn-primary" style="margin-bottom:20px;">Logg inn</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+﻿@model Model.AdminModel.Login
 
-        </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<body>
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+		<div class="container-fluid fill">
+			
+			<div class="container">
+				<div class="mypage">
+					<div class="jumbotron mypage-section">
+						<h1 class="mypage-header">Logg inn</h1>
+					</div>
+					<div class="col-xs-12">
+						<div class="container-fluid mypage-section">
+							<div class="col-xs-4 col-xs-offset-4">
+                                <form>
+                                    <div class="form-group">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <label for="admin_username">Brukernavn</label>
+                                        <!--<input type="text" class="form-control" id="username">-->
+                                        @Html.EditorFor(model => model.Username, new { htmlattributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "form-error" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="admin_password">Passord</label>
+                                        <!--<input type="password" class="form-control" id="admin_password">-->
+                                        @Html.EditorFor(model => model.Password, new { htmlattributes = new { @class = "form-control" ,@type="password"} })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "form-error" })
+                                    </div>
+                                   
+                                    <button type="submit" class="btn btn-primary" style="margin-bottom:20px;">Logg inn</button>
+                                </form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="script.js"></script>
 </body>
-</html>

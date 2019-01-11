@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DAL.Repositories;
+using Model.AdminModel;
 using Model.Models;
 using Model.ViewModels;
 using System;
@@ -10,30 +11,50 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class LunaBLL : ILunaLogic
+    public class LunaLogic : ILunaLogic
     {
         private IMovieRepository _movieRepository;
         private IUserRepository _userRepository;
         private IOrderRepository _orderRepository;
+        private IAdminRepository _adminRepository;
 
-        public LunaBLL()
+        public LunaLogic()
         {
             _movieRepository = new MovieRepository();
             _userRepository = new UserRepository();
             _orderRepository = new OrderRepository();
+            _adminRepository = new AdminRepository();
         }
 
-        public LunaBLL(IMovieRepository stub)
+        public LunaLogic(IAdminRepository stub)
+        {
+            _adminRepository = stub;
+        }
+
+        public bool VerifyAdmin(Login login)
+        {
+            return _adminRepository.VerifyAdmin(login);
+        }
+
+        public List<User> ListUsers()
+        {
+            return _adminRepository.ListUsers();
+        }
+
+
+        /******************************************** OBLIGATORISK OPPGAVE 1 ********************************************/
+
+        public LunaLogic(IMovieRepository stub)
         {
             _movieRepository = stub;
         }
 
-        public LunaBLL(IUserRepository stub)
+        public LunaLogic(IUserRepository stub)
         {
             _userRepository = stub;
         }
 
-        public LunaBLL(IOrderRepository stub)
+        public LunaLogic(IOrderRepository stub)
         {
             _orderRepository = stub;
         }
@@ -87,6 +108,64 @@ namespace BLL
         {
             return _userRepository.GetUser(email);
         }
+        public bool RemoveUser(string email)
+        {
+            return _adminRepository.RemoveUser(email);
+        }
 
-	}
+        public bool EditUser(User user)
+        {
+            return _adminRepository.EditUser(user);
+        }
+        public List<Movie> GetMoviesById()
+        {
+            return _adminRepository.GetMoviesById();
+        }
+
+       
+
+        public byte MovieAvailabilty(int id)
+        {
+            return _adminRepository.MovieAvailabilty(id);
+        }
+        public bool EditMovie(Movie movie)
+        {
+            return _adminRepository.EditMovie(movie);
+        }
+
+        public bool AddMovie(Movie movie)
+        {
+            return _adminRepository.AddMovie(movie);
+        }
+        public byte GetUserStatus(string email)
+        {
+            return _adminRepository.GetUserStatus(email);
+        }
+
+        public byte SetUserStatus(string email)
+        {
+            return _adminRepository.SetUserStatus(email);
+        }
+        public List<Order> GetOrdersById()
+        {
+            return _adminRepository.GetOrdersById();
+        }
+       
+        public List<JsOrderLineViewModel> OrderOrderlines(int OrdreId)
+        {
+            return _adminRepository.OrderOrderlines(OrdreId);
+        }
+        public List<OrdersAndUserViewModel> GetOrdersByDate()
+        {
+            return _adminRepository.GetOrdersByDate();
+        }
+        public int[] GetCharInformation()
+        {
+            return _adminRepository.GetCharInformation();
+        }
+        public byte SetOrderStatus(int id)
+        {
+            return _adminRepository.SetOrderStatus(id);
+        }
+    }
 }
